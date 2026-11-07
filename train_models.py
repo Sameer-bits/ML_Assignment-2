@@ -146,7 +146,10 @@ def build_models() -> dict:
             ("model", KNeighborsClassifier(n_neighbors=5)),
         ]),
         "Naive Bayes": GaussianNB(),
-        "SVM": SVC(probability=True, random_state=RANDOM_STATE),
+        "SVM": Pipeline([
+            ("scaler", StandardScaler()),
+            ("model", SVC(probability=True, random_state=RANDOM_STATE)),
+        ]),
     }
 
 

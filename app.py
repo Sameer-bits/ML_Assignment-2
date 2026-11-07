@@ -243,38 +243,62 @@ st.write(
     "the same stratified training and test split."
 )
 
-st.dataframe(
-    comparison_results.style.format({
-        "Accuracy": "{:.4f}",
-        "AUC": "{:.4f}",
-        "Precision": "{:.4f}",
-        "Recall": "{:.4f}",
-        "F1 Score": "{:.4f}",
-        "MCC": "{:.4f}"
-    }).highlight_max(
-        subset=[
-            "Accuracy",
-            "AUC",
-            "Precision",
-            "Recall",
-            "F1 Score",
-            "MCC"
-        ],
-        color="#d8f0dc"
-    ),
-    width='stretch',
-    hide_index=True
-)
+if comparison_results is not None:
+    st.dataframe(
+        comparison_results.style.format({
+            "Accuracy": "{:.4f}",
+            "AUC": "{:.4f}",
+            "Precision": "{:.4f}",
+            "Recall": "{:.4f}",
+            "F1 Score": "{:.4f}",
+            "MCC": "{:.4f}"
+        }).highlight_max(
+            subset=[
+                "Accuracy", "AUC", "Precision",
+                "Recall", "F1 Score", "MCC"
+            ],
+            color="#d8f0dc"
+        ),
+        width="stretch",
+        hide_index=True
+    )
 
-st.info(
-    "Observation: SVM achieved the highest Accuracy (0.9210), "
-    "F1 Score (0.9328) and MCC (0.9045). "
-    "Logistic Regression achieved the highest AUC (0.9947)."
-)
+    metric_columns = [
+        "Accuracy", "AUC", "Precision",
+        "Recall", "F1 Score", "MCC"
+    ]
+    best_models = {}
+    for metric in metric_columns:
+        valid_rows = comparison_results.dropna(subset=[metric])
+        if not valid_rows.empty:
+            best_row = valid_rows.loc[valid_rows[metric].idxmax()]
+            best_models[metric] = (str(best_row["Model"]), float(best_row[metric]))
 
-st.write("**Overall observation:** SVM performed best across most "
-         "of the reported metrics, while Logistic Regression "
-         "showed the strongest AUC.")
+    if best_models:
+        best_accuracy = best_models.get("Accuracy")
+        best_auc = best_models.get("AUC")
+        if best_accuracy and best_auc:
+            st.info(
+                f"{best_accuracy[0]} achieved the highest Accuracy "
+                f"({best_accuracy[1]:.4f}). "
+                f"{best_auc[0]} achieved the highest AUC "
+                f"({best_auc[1]:.4f})."
+            )
+
+        overall_wins = {}
+        for metric, (model_name, _) in best_models.items():
+            overall_wins[model_name] = overall_wins.get(model_name, 0) + 1
+        overall_winner = max(overall_wins, key=overall_wins.get)
+        st.write(
+            f"**Overall observation:** {overall_winner} achieved the "
+            f"highest value in {overall_wins[overall_winner]} of the "
+            f"{len(best_models)} reported metrics."
+        )
+else:
+    st.warning(
+        "The model comparison table is unavailable. "
+        "Check reports/model_comparison.csv or run train_models.py."
+    )
 
 
 

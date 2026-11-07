@@ -34,7 +34,7 @@ Features:
 
 | Model | Accuracy | AUC | Precision | Recall | F1 | MCC |
 |---|---:|---:|---:|---:|---:|---:|
-| Logistic Regression | 0.9195 | 0.9947 | 0.9311 | 0.9303 | 0.9306 | 0.9028 |
+| Logistic Regression | 0.9192 | 0.9947 | 0.9307 | 0.9300 | 0.9302 | 0.9023 |
 | Decision Tree | 0.8963 | 0.9464 | 0.9108 | 0.9111 | 0.9108 | 0.8746 |
 | KNN | 0.9155 | 0.9832 | 0.9290 | 0.9256 | 0.9270 | 0.8978 |
 | Gaussian Naive Bayes | 0.7630 | 0.9670 | 0.7736 | 0.7685 | 0.7669 | 0.7143 |
@@ -46,7 +46,7 @@ The five machine learning models were evaluated using Accuracy, AUC, Precision, 
 
 | ML Model Name | Observation about Model Performance |
 |---|---|
-| Logistic Regression | Achieved 91.95% accuracy and the highest AUC of 0.9947. It showed strong overall performance, with an F1-score of 0.9306 and MCC of 0.9028. |
+| Logistic Regression | Achieved 91.92% accuracy and the highest AUC of 0.9947. It showed strong overall performance, with an F1-score of 0.9302 and MCC of 0.9023. |
 | Decision Tree | Achieved 89.63% accuracy and an F1-score of 0.9108. It provided reasonable classification performance but performed below Logistic Regression, KNN and SVM. |
 | KNN | Achieved 91.55% accuracy and an AUC of 0.9832. Its F1-score of 0.9270 indicates good predictive performance, making it a competitive model. |
 | Naive Bayes | Achieved 76.30% accuracy, the lowest among the five models. Its F1-score of 0.7669 and MCC of 0.7143 indicate comparatively weaker classification performance. |
